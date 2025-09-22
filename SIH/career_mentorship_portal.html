@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career & Mentorship Portal</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .tab-content {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .user-info {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .event-item, .alumni-item, .resource-item {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .event-item:hover, .alumni-item:hover, .resource-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.1);
+        }
+
+        .event-date {
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .alumni-profession {
+            background: #28a745;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+
+        .mentorship-requests {
+            background: rgba(40, 167, 69, 0.1);
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .request-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .resource-type {
+            background: #17a2b8;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .filter-section {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 1001;
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.3s ease;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: #28a745;
+        }
+
+        .notification.error {
+            background: #dc3545;
+        }
+
+        .notification.info {
+            background: #17a2b8;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .tab-btn {
+                width: 200px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-graduation-cap"></i> Career & Mentorship Portal</h1>
+            <p>Connecting Alumni with Students for Career Excellence</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('login')">Login</button>
+            <button class="tab-btn" onclick="showTab('student-dashboard')" id="student-tab" style="display: none;">Student Dashboard</button>
+            <button class="tab-btn" onclick="showTab('alumni-dashboard')" id="alumni-tab" style="display: none;">Alumni Dashboard</button>
+            <button class="tab-btn" onclick="showTab('admin-dashboard')" id="admin-tab" style="display: none;">Admin Dashboard</button>
+            <button class="tab-btn" onclick="showTab('webinars')">Webinars</button>
+            <button class="tab-btn" onclick="showTab('mentorship')">Find Mentors</button>
+            <button class="tab-btn" onclick="showTab('resources')">Resources</button>
+        </div>
+
+        <!-- Login Tab -->
+        <div id="login" class="tab-content active">
+            <div class="login-form">
+                <h2 style="text-align: center; margin-bottom: 30px; color: #333;">Login to Your Account</h2>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userType">I am a:</label>
+                        <select id="userType" required>
+                            <option value="">Select user type</option>
+                            <option value="student">Student</option>
+                            <option value="alumni">Alumni</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn" style="width: 100%;">Login</button>
+                    </div>
+                </form>
+                <div style="text-align: center; margin-top: 20px;">
+                    <p style="color: #666;">Demo Credentials:</p>
+                    <p style="color: #666; font-size: 0.9rem;">Student: student@example.com / password</p>
+                    <p style="color: #666; font-size: 0.9rem;">Alumni: alumni@example.com / password</p>
+                    <p style="color: #666; font-size: 0.9rem;">Admin: admin@example.com / admin123</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Student Dashboard -->
+        <div id="student-dashboard" class="tab-content">
+            <div class="user-info">
+                <div>
+                    <strong id="student-name">John Doe</strong>
+                    <p>Computer Science, 3rd Year</p>
+                </div>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3><i class="fas fa-calendar-alt"></i> Upcoming Webinars</h3>
+                    <div id="student-webinars">
+                        <div class="event-item">
+                            <div class="event-date">Dec 25, 2025 - 3:00 PM</div>
+                            <h4>Resume Preparation for IT Jobs</h4>
+                            <p>Learn how to create a compelling resume that stands out to IT recruiters.</p>
+                            <p><strong>By:</strong> Sarah Johnson (Software Engineer at Google)</p>
+                            <button class="btn" onclick="registerForEvent('resume-prep')">Register</button>
+                        </div>
+                        <div class="event-item">
+                            <div class="event-date">Dec 28, 2025 - 2:00 PM</div>
+                            <h4>Interview Skills Masterclass</h4>
+                            <p>Master the art of technical and behavioral interviews.</p>
+                            <p><strong>By:</strong> Mike Chen (Senior Developer at Microsoft)</p>
+                            <button class="btn" onclick="registerForEvent('interview-skills')">Register</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-users"></i> My Mentorship Requests</h3>
+                    <div id="student-requests">
+                        <div class="mentorship-requests">
+                            <p><strong>Request to:</strong> Sarah Johnson</p>
+                            <p><strong>Status:</strong> Pending</p>
+                            <p><strong>Message:</strong> "Hi, I'm interested in learning about software development career paths."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-hand-holding-heart"></i> Make a Donation</h3>
+                    <div style="padding: 15px;">
+                        <p>Support our mentorship program and help us grow our community.</p>
+                        <form onsubmit="handleDonation(event, 'student')" class="donation-form">
+                            <div class="form-group">
+                                <label for="donation-amount">Amount (₹)</label>
+                                <input type="number" id="donation-amount" min="100" step="100" required placeholder="Enter amount">
+                            </div>
+                            <div class="form-group">
+                                <label for="donation-message">Message (Optional)</label>
+                                <textarea id="donation-message" rows="2" placeholder="Add a message with your donation"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success" style="width: 100%;">Donate Now</button>
+                        </form>
+                        <div style="margin-top: 20px;">
+                            <h4>My Donations</h4>
+                            <div id="student-donations" class="donation-history">
+                                <!-- Donation history will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alumni Dashboard -->
+        <div id="alumni-dashboard" class="tab-content">
+            <div class="user-info">
+                <div>
+                    <strong id="alumni-name">Sarah Johnson</strong>
+                    <p>Software Engineer at Google | Class of 2018</p>
+                </div>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3><i class="fas fa-plus-circle"></i> Create New Webinar</h3>
+                    <form onsubmit="createWebinar(event)">
+                        <div class="form-group">
+                            <label for="webinar-title">Webinar Title</label>
+                            <input type="text" id="webinar-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="webinar-description">Description</label>
+                            <textarea id="webinar-description" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="webinar-date">Date</label>
+                            <input type="date" id="webinar-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="webinar-time">Time</label>
+                            <input type="time" id="webinar-time" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="webinar-link">Meeting Link</label>
+                            <input type="url" id="webinar-link" placeholder="https://meet.google.com/..." required>
+                        </div>
+                        <button type="submit" class="btn">Create Webinar</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-envelope"></i> Mentorship Requests</h3>
+                    <div id="alumni-requests">
+                        <div class="mentorship-requests">
+                            <p><strong>From:</strong> John Doe (Computer Science, 3rd Year)</p>
+                            <p><strong>Message:</strong> "Hi, I'm interested in learning about software development career paths."</p>
+                            <div class="request-actions">
+                                <button class="btn btn-success" onclick="respondToRequest('accept')">Accept</button>
+                                <button class="btn btn-secondary" onclick="respondToRequest('decline')">Decline</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>                <div class="card">
+                    <h3><i class="fas fa-hand-holding-heart"></i> Make a Contribution</h3>
+                    <div style="padding: 15px;">
+                        <p>As an alumnus, your contribution helps support the next generation of professionals.</p>
+                        <form onsubmit="handleDonation(event, 'alumni')" class="donation-form">
+                            <div class="form-group">
+                                <label for="donation-amount-alumni">Amount (₹)</label>
+                                <input type="number" id="donation-amount-alumni" min="100" step="100" required placeholder="Enter amount">
+                            </div>
+                            <div class="form-group">
+                                <label for="donation-message-alumni">Message (Optional)</label>
+                                <textarea id="donation-message-alumni" rows="2" placeholder="Add an inspiring message with your contribution"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success" style="width: 100%;">Contribute Now</button>
+                        </form>
+                        <div style="margin-top: 20px;">
+                            <h4>My Contributions</h4>
+                            <div id="alumni-donations" class="donation-history">
+                                <!-- Donation history will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-calendar-check"></i> My Webinars</h3>
+                    <div id="alumni-webinars">
+                        <div class="event-item">
+                            <div class="event-date">Dec 25, 2025 - 3:00 PM</div>
+                            <h4>Resume Preparation for IT Jobs</h4>
+                            <p>Learn how to create a compelling resume that stands out to IT recruiters.</p>
+                            <p><strong>Registered:</strong> 25 students</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Webinars Tab -->
+        <div id="webinars" class="tab-content">
+            <h2 style="margin-bottom: 20px;"><i class="fas fa-video"></i> Upcoming Webinars & Events</h2>
+            <div id="all-webinars">
+                <div class="event-item">
+                    <div class="event-date">Dec 25, 2025 - 3:00 PM</div>
+                    <h4>Resume Preparation for IT Jobs</h4>
+                    <p>Learn how to create a compelling resume that stands out to IT recruiters. This session will cover formatting, key skills to highlight, and common mistakes to avoid.</p>
+                    <p><strong>Presenter:</strong> Sarah Johnson (Software Engineer at Google)</p>
+                    <p><strong>Duration:</strong> 1.5 hours</p>
+                    <button class="btn" onclick="viewEventDetails('resume-prep')">View Details</button>
+                </div>
+                <div class="event-item">
+                    <div class="event-date">Dec 28, 2025 - 2:00 PM</div>
+                    <h4>Interview Skills Masterclass</h4>
+                    <p>Master the art of technical and behavioral interviews. Learn how to tackle coding challenges and present yourself confidently.</p>
+                    <p><strong>Presenter:</strong> Mike Chen (Senior Developer at Microsoft)</p>
+                    <p><strong>Duration:</strong> 2 hours</p>
+                    <button class="btn" onclick="viewEventDetails('interview-skills')">View Details</button>
+                </div>
+                <div class="event-item">
+                    <div class="event-date">Jan 5, 2026 - 4:00 PM</div>
+                    <h4>Startup vs Corporate: Career Paths</h4>
+                    <p>Explore the differences between working at startups and large corporations. Make informed career decisions.</p>
+                    <p><strong>Presenter:</strong> Lisa Park (Former Startup Founder, now at Amazon)</p>
+                    <p><strong>Duration:</strong> 1 hour</p>
+                    <button class="btn" onclick="viewEventDetails('career-paths')">View Details</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mentorship Tab -->
+        <div id="mentorship" class="tab-content">
+            <h2 style="margin-bottom: 20px;"><i class="fas fa-handshake"></i> Find Your Mentor</h2>
+            
+            <div class="filter-section">
+                <h3>Filter by Profession</h3>
+                <select id="profession-filter" onchange="filterAlumni()">
+                    <option value="">All Professions</option>
+                    <option value="Software Engineer">Software Engineer</option>
+                    <option value="Data Scientist">Data Scientist</option>
+                    <option value="Product Manager">Product Manager</option>
+                    <option value="Designer">Designer</option>
+                    <option value="Marketing Manager">Marketing Manager</option>
+                </select>
+            </div>
+
+            <div id="alumni-directory">
+                <div class="alumni-item" data-profession="Software Engineer">
+                    <h4>Sarah Johnson</h4>
+                    <div class="alumni-profession">Software Engineer</div>
+                    <p><strong>Company:</strong> Google</p>
+                    <p><strong>Graduation Year:</strong> 2018</p>
+                    <p><strong>Expertise:</strong> Full-stack development, System design, Career guidance</p>
+                    <p>Experienced software engineer with 6+ years in the industry. Passionate about helping students transition from academia to industry.</p>
+                    <button class="btn" onclick="requestMentorship('Sarah Johnson')">Request Mentorship</button>
+                </div>
+                
+                <div class="alumni-item" data-profession="Software Engineer">
+                    <h4>Mike Chen</h4>
+                    <div class="alumni-profession">Software Engineer</div>
+                    <p><strong>Company:</strong> Microsoft</p>
+                    <p><strong>Graduation Year:</strong> 2016</p>
+                    <p><strong>Expertise:</strong> Cloud computing, DevOps, Technical interviews</p>
+                    <p>Senior developer with extensive experience in cloud technologies and team leadership.</p>
+                    <button class="btn" onclick="requestMentorship('Mike Chen')">Request Mentorship</button>
+                </div>
+                
+                <div class="alumni-item" data-profession="Data Scientist">
+                    <h4>Dr. Emily Rodriguez</h4>
+                    <div class="alumni-profession">Data Scientist</div>
+                    <p><strong>Company:</strong> Netflix</p>
+                    <p><strong>Graduation Year:</strong> 2015</p>
+                    <p><strong>Expertise:</strong> Machine Learning, Data Analytics, Research</p>
+                    <p>Data scientist specializing in recommendation systems and machine learning algorithms.</p>
+                    <button class="btn" onclick="requestMentorship('Dr. Emily Rodriguez')">Request Mentorship</button>
+                </div>
+                
+                <div class="alumni-item" data-profession="Product Manager">
+                    <h4>David Kim</h4>
+                    <div class="alumni-profession">Product Manager</div>
+                    <p><strong>Company:</strong> Apple</p>
+                    <p><strong>Graduation Year:</strong> 2017</p>
+                    <p><strong>Expertise:</strong> Product strategy, User experience, Agile methodologies</p>
+                    <p>Product manager with experience in consumer electronics and mobile applications.</p>
+                    <button class="btn" onclick="requestMentorship('David Kim')">Request Mentorship</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="admin-dashboard" class="tab-content">
+            <div class="user-info">
+                <div>
+                    <strong id="admin-name">Administrator</strong>
+                    <p>System Administrator</p>
+                </div>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+
+            <h2 style="margin-bottom: 20px;"><i class="fas fa-chart-line"></i> Portal Statistics</h2>
+            
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3><i class="fas fa-users"></i> User Statistics</h3>
+                    <div style="padding: 15px;">
+                        <p><strong>Total Students:</strong> <span id="student-count">150</span></p>
+                        <p><strong>Total Alumni:</strong> <span id="alumni-count">45</span></p>
+                        <p><strong>Active Users (Last 30 days):</strong> <span id="active-users">89</span></p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-video"></i> Webinar Statistics</h3>
+                    <div style="padding: 15px;">
+                        <p><strong>Total Webinars:</strong> <span id="total-webinars">24</span></p>
+                        <p><strong>Upcoming Webinars:</strong> <span id="upcoming-webinars">8</span></p>
+                        <p><strong>Average Attendance:</strong> <span id="avg-attendance">35</span> students</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-handshake"></i> Mentorship Program</h3>
+                    <div style="padding: 15px;">
+                        <p><strong>Active Mentorship Relations:</strong> <span id="active-mentorships">32</span></p>
+                        <p><strong>Pending Requests:</strong> <span id="pending-requests">12</span></p>
+                        <p><strong>Completed Mentorships:</strong> <span id="completed-mentorships">28</span></p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-chart-pie"></i> Resource Usage</h3>
+                    <div style="padding: 15px;">
+                        <p><strong>Total Downloads:</strong> <span id="total-downloads">450</span></p>
+                        <p><strong>Most Popular Resource:</strong> <span id="popular-resource">Interview Guide</span></p>
+                        <p><strong>Resource Contributions:</strong> <span id="resource-contributions">15</span> this month</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-hand-holding-heart"></i> Donation Statistics</h3>
+                    <div style="padding: 15px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                            <div style="background: rgba(40, 167, 69, 0.1); padding: 15px; border-radius: 8px;">
+                                <h4>Total Donations</h4>
+                                <p style="font-size: 24px; font-weight: bold; color: #28a745;">₹<span id="total-donations">25,000</span></p>
+                            </div>
+                            <div style="background: rgba(102, 126, 234, 0.1); padding: 15px; border-radius: 8px;">
+                                <h4>This Month</h4>
+                                <p style="font-size: 24px; font-weight: bold; color: #667eea;">₹<span id="monthly-donations">8,500</span></p>
+                            </div>
+                        </div>
+                        <p><strong>Total Contributors:</strong> <span id="total-contributors">45</span></p>
+                        <p><strong>Student Donations:</strong> ₹<span id="student-donations-total">10,000</span></p>
+                        <p><strong>Alumni Donations:</strong> ₹<span id="alumni-donations-total">15,000</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 20px;">
+                <h3><i class="fas fa-bell"></i> Recent Activities</h3>
+                <div id="recent-activities" style="padding: 15px;">
+                    <div class="activity-item" style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <p><strong>New Webinar Created:</strong> "Resume Preparation for IT Jobs" by Sarah Johnson</p>
+                        <small style="color: #666;">2 hours ago</small>
+                    </div>
+                    <div class="activity-item" style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <p><strong>New Mentorship Match:</strong> Mike Chen - John Doe</p>
+                        <small style="color: #666;">5 hours ago</small>
+                    </div>
+                    <div class="activity-item" style="padding: 10px 0;">
+                        <p><strong>New Resource Added:</strong> "System Design Interview Guide"</p>
+                        <small style="color: #666;">1 day ago</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources Tab -->
+        <div id="resources" class="tab-content">
+            <h2 style="margin-bottom: 20px;"><i class="fas fa-book"></i> Career Resources Hub</h2>
+            
+            <div id="resource-hub">
+                <div class="resource-item">
+                    <div class="resource-type">Resume Template</div>
+                    <h4>Software Engineer Resume Template</h4>
+                    <p>A comprehensive resume template specifically designed for software engineering positions. Includes sections for projects, technical skills, and experience.</p>
+                    <p><strong>Uploaded by:</strong> Sarah Johnson</p>
+                    <button class="btn" onclick="downloadResource('se-resume-template.pdf')">Download PDF</button>
+                </div>
+                
+                <div class="resource-item">
+                    <div class="resource-type">Interview Guide</div>
+                    <h4>Technical Interview Questions Bank</h4>
+                    <p>Collection of 200+ commonly asked technical interview questions for software engineering roles, including data structures, algorithms, and system design.</p>
+                    <p><strong>Uploaded by:</strong> Mike Chen</p>
+                    <button class="btn" onclick="downloadResource('interview-questions.pdf')">Download PDF</button>
+                </div>
+                
+                <div class="resource-item">
+                    <div class="resource-type">Online Course</div>
+                    <h4>System Design Fundamentals</h4>
+                    <p>Free online course covering the basics of system design interviews. Perfect for students preparing for senior software engineer positions.</p>
+                    <p><strong>Curated by:</strong> Alumni Network</p>
+                    <button class="btn" onclick="openExternalLink('https://example.com/system-design-course')">Open Course</button>
+                </div>
+                
+                <div class="resource-item">
+                    <div class="resource-type">Career Guide</div>
+                    <h4>From Campus to Corporate: A Transition Guide</h4>
+                    <p>A comprehensive guide covering the transition from college to corporate life, including workplace etiquette, networking tips, and career planning.</p>
+                    <p><strong>Uploaded by:</strong> Dr. Emily Rodriguez</p>
+                    <button class="btn" onclick="downloadResource('campus-to-corporate.pdf')">Download PDF</button>
+                </div>
+                
+                <div class="resource-item">
+                    <div class="resource-type">Salary Guide</div>
+                    <h4>Tech Industry Salary Benchmarks 2025</h4>
+                    <p>Current salary ranges for various tech positions across different experience levels and geographic locations.</p>
+                    <p><strong>Uploaded by:</strong> David Kim</p>
+                    <button class="btn" onclick="downloadResource('salary-guide-2025.pdf')">Download PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('eventModal')">&times;</span>
+            <div id="event-details"></div>
+        </div>
+    </div>
+
+    <div id="mentorshipModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('mentorshipModal')">&times;</span>
+            <h2>Request Mentorship</h2>
+            <form onsubmit="sendMentorshipRequest(event)">
+                <div class="form-group">
+                    <label for="mentor-name">Mentor:</label>
+                    <input type="text" id="mentor-name" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="mentorship-message">Your Message:</label>
+                    <textarea id="mentorship-message" rows="5" placeholder="Tell them about yourself and what you hope to learn..." required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <script>
+        // Global state
+        let currentUser = null;
+        let webinars = [];
+        let mentorshipRequests = [];
+
+        // Tab management
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Login handling
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const userType = document.getElementById('userType').value;
+            
+            // Demo login validation
+            if ((email === 'student@example.com' && userType === 'student') || 
+                (email === 'alumni@example.com' && userType === 'alumni') ||
+                (email === 'admin@example.com' && userType === 'admin')) {
+                if (password === 'password') {
+                    currentUser = { email, userType };
+                    
+                    // Show appropriate dashboard
+                    if (userType === 'student') {
+                        document.getElementById('student-tab').style.display = 'block';
+                        showTab('student-dashboard');
+                        document.querySelector('[onclick="showTab(\'student-dashboard\')"]').classList.add('active');
+                    } else if (userType === 'alumni') {
+                        document.getElementById('alumni-tab').style.display = 'block';
+                        showTab('alumni-dashboard');
+                        document.querySelector('[onclick="showTab(\'alumni-dashboard\')"]').classList.add('active');
+                    } else if (userType === 'admin') {
+                        showTab('admin-dashboard');
+                        document.querySelector('[onclick="showTab(\'admin-dashboard\')"]').classList.add('active');
+                    }
+                    
+                    showNotification('Login successful!', 'success');
+                } else {
+                    showNotification('Invalid password!', 'error');
+                }
+            } else {
+                showNotification('Invalid credentials!', 'error');
+            }
+        }
+
+        // Logout
+        function logout() {
+            currentUser = null;
+            // Show all default tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (!btn.id.includes('-tab')) {
+                    btn.style.display = 'block';
+                } else {
+                    btn.style.display = 'none';
+                }
+            });
+            showTab('login');
+            document.querySelector('[onclick="showTab(\'login\')"]').classList.add('active');
+            showNotification('Logged out successfully!', 'info');
+        }
+
+        // Webinar management
+        function createWebinar(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('webinar-title').value;
+            const description = document.getElementById('webinar-description').value;
+            const date = document.getElementById('webinar-date').value;
+            const time = document.getElementById('webinar-time').value;
+            const link = document.getElementById('webinar-link').value;
+            
+            const webinar = {
+                id: Date.now(),
+                title,
+                description,
+                date,
+                time,
+                link,
+                presenter: currentUser.userType === 'alumni' ? 'Sarah Johnson' : 'Unknown',
+                company: 'Google'
+            };
+            
+            webinars.push(webinar);
+            
+            // Add to alumni's webinar list
+            const alumniWebinars = document.getElementById('alumni-webinars');
+            const eventDiv = document.createElement('div');
+            eventDiv.className = 'event-item';
+            eventDiv.innerHTML = `
+                <div class="event-date">${formatDate(date)} - ${time}</div>
+                <h4>${title}</h4>
+                <p>${description}</p>
+                <p><strong>Registered:</strong> 0 students</p>
+            `;
+            alumniWebinars.appendChild(eventDiv);
+            
+            // Reset form
+            event.target.reset();
+            
+            showNotification('Webinar created successfully!', 'success');
+        }
+
+        function registerForEvent(eventId) {
+            showNotification('Successfully registered for the webinar!', 'success');
+        }
+
+        function viewEventDetails(eventId) {
+            let eventDetails = '';
+            
+            switch(eventId) {
+                case 'resume-prep':
+                    eventDetails = `
+                        <h2>Resume Preparation for IT Jobs</h2>
+                        <p><strong>Date:</strong> December 25, 2025</p>
+                        <p><strong>Time:</strong> 3:00 PM - 4:30 PM</p>
+                        <p><strong>Presenter:</strong> Sarah Johnson (Software Engineer at Google)</p>
+                        <p><strong>Meeting Link:</strong> <a href="https://meet.google.com/example" target="_blank">Join Meeting</a></p>
+                        <hr>
+                        <h3>What You'll Learn:</h3>
+                        <ul>
+                            <li>How to structure your resume for maximum impact</li>
+                            <li>Key technical skills to highlight</li>
+                            <li>Common mistakes to avoid</li>
+                            <li>ATS-friendly formatting tips</li>
+                            <li>Tailoring your resume for specific roles</li>
+                        </ul>
+                        <p><strong>Prerequisites:</strong> None - suitable for all levels</p>
+                        <button class="btn" onclick="registerForEvent('resume-prep'); closeModal('eventModal');">Register Now</button>
+                    `;
+                    break;
+                case 'interview-skills':
+                    eventDetails = `
+                        <h2>Interview Skills Masterclass</h2>
+                        <p><strong>Date:</strong> December 28, 2025</p>
+                        <p><strong>Time:</strong> 2:00 PM - 4:00 PM</p>
+                        <p><strong>Presenter:</strong> Mike Chen (Senior Developer at Microsoft)</p>
+                        <p><strong>Meeting Link:</strong> <a href="https://meet.google.com/example2" target="_blank">Join Meeting</a></p>
+                        <hr>
+                        <h3>What You'll Learn:</h3>
+                        <ul>
+                            <li>Technical interview preparation strategies</li>
+                            <li>Behavioral interview techniques</li>
+                            <li>How to approach coding challenges</li>
+                            <li>Salary negotiation tips</li>
+                            <li>Following up after interviews</li>
+                        </ul>
+                        <p><strong>Prerequisites:</strong> Basic programming knowledge recommended</p>
+                        <button class="btn" onclick="registerForEvent('interview-skills'); closeModal('eventModal');">Register Now</button>
+                    `;
+                    break;
+                case 'career-paths':
+                    eventDetails = `
+                        <h2>Startup vs Corporate: Career Paths</h2>
+                        <p><strong>Date:</strong> January 5, 2026</p>
+                        <p><strong>Time:</strong> 4:00 PM - 5:00 PM</p>
+                        <p><strong>Presenter:</strong> Lisa Park (Former Startup Founder, now at Amazon)</p>
+                        <p><strong>Meeting Link:</strong> <a href="https://meet.google.com/example3" target="_blank">Join Meeting</a></p>
+                        <hr>
+                        <h3>What You'll Learn:</h3>
+                        <ul>
+                            <li>Pros and cons of startup vs corporate environments</li>
+                            <li>How to evaluate company culture fit</li>
+                            <li>Career growth opportunities in different settings</li>
+                            <li>Compensation structures comparison</li>
+                            <li>Making strategic career decisions</li>
+                        </ul>
+                        <p><strong>Prerequisites:</strong> None - suitable for all students</p>
+                        <button class="btn" onclick="registerForEvent('career-paths'); closeModal('eventModal');">Register Now</button>
+                    `;
+                    break;
+            }
+            
+            document.getElementById('event-details').innerHTML = eventDetails;
+            document.getElementById('eventModal').style.display = 'block';
+        }
+
+        // Mentorship functions
+        function requestMentorship(mentorName) {
+            document.getElementById('mentor-name').value = mentorName;
+            document.getElementById('mentorshipModal').style.display = 'block';
+        }
+
+        function sendMentorshipRequest(event) {
+            event.preventDefault();
+            
+            const mentorName = document.getElementById('mentor-name').value;
+            const message = document.getElementById('mentorship-message').value;
+            
+            const request = {
+                id: Date.now(),
+                mentor: mentorName,
+                student: currentUser ? 'John Doe' : 'Anonymous Student',
+                message: message,
+                status: 'pending',
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            mentorshipRequests.push(request);
+            
+            // Add to student's requests
+            const studentRequests = document.getElementById('student-requests');
+            const requestDiv = document.createElement('div');
+            requestDiv.className = 'mentorship-requests';
+            requestDiv.innerHTML = `
+                <p><strong>Request to:</strong> ${mentorName}</p>
+                <p><strong>Status:</strong> Pending</p>
+                <p><strong>Message:</strong> "${message}"</p>
+            `;
+            studentRequests.appendChild(requestDiv);
+            
+            closeModal('mentorshipModal');
+            document.getElementById('mentorship-message').value = '';
+            showNotification('Mentorship request sent successfully!', 'success');
+        }
+
+        function respondToRequest(action) {
+            const message = action === 'accept' ? 'Mentorship request accepted!' : 'Mentorship request declined.';
+            const type = action === 'accept' ? 'success' : 'info';
+            showNotification(message, type);
+        }
+
+        // Alumni filtering
+        function filterAlumni() {
+            const profession = document.getElementById('profession-filter').value;
+            const alumniItems = document.querySelectorAll('.alumni-item');
+            
+            alumniItems.forEach(item => {
+                if (profession === '' || item.dataset.profession === profession) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Resource functions
+        function downloadResource(filename) {
+            showNotification(`Downloading ${filename}...`, 'info');
+            // In a real application, this would trigger an actual download
+        }
+
+        function openExternalLink(url) {
+            window.open(url, '_blank');
+        }
+
+        // Modal functions
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Utility functions
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
+
+        // Donation handling
+        function handleDonation(event, userType) {
+            event.preventDefault();
+            
+            const amountInput = document.getElementById(`donation-amount${userType === 'alumni' ? '-alumni' : ''}`);
+            const messageInput = document.getElementById(`donation-message${userType === 'alumni' ? '-alumni' : ''}`);
+            
+            const amount = parseInt(amountInput.value);
+            const message = messageInput.value;
+            
+            if (amount < 100) {
+                showNotification('Minimum donation amount is ₹100', 'error');
+                return;
+            }
+
+            const donation = {
+                id: Date.now(),
+                amount,
+                message,
+                date: new Date(),
+                donor: currentUser.name,
+                userType
+            };
+
+            // In a real application, this would be sent to the server
+            // For demo purposes, we'll just update the UI
+            const donationElement = document.createElement('div');
+            donationElement.className = 'mentorship-requests';
+            donationElement.style.marginBottom = '10px';
+            donationElement.innerHTML = `
+                <p><strong>Amount:</strong> ₹${amount}</p>
+                <p><strong>Date:</strong> ${formatDate(donation.date)}</p>
+                ${message ? `<p><strong>Message:</strong> "${message}"</p>` : ''}
+                <span class="resource-type" style="background: #28a745;">Completed</span>
+            `;
+
+            const donationHistory = document.getElementById(`${userType}-donations`);
+            donationHistory.insertBefore(donationElement, donationHistory.firstChild);
+
+            // Update admin dashboard statistics (demo only)
+            if (document.getElementById('total-donations')) {
+                const currentTotal = parseInt(document.getElementById('total-donations').textContent.replace(/,/g, ''));
+                document.getElementById('total-donations').textContent = (currentTotal + amount).toLocaleString();
+                
+                const currentMonthly = parseInt(document.getElementById('monthly-donations').textContent.replace(/,/g, ''));
+                document.getElementById('monthly-donations').textContent = (currentMonthly + amount).toLocaleString();
+                
+                const userTotal = document.getElementById(`${userType}-donations-total`);
+                const currentUserTotal = parseInt(userTotal.textContent.replace(/,/g, ''));
+                userTotal.textContent = (currentUserTotal + amount).toLocaleString();
+            }
+
+            // Reset form
+            amountInput.value = '';
+            messageInput.value = '';
+
+            showNotification('Thank you for your donation!', 'success');
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Close modals when clicking outside
+            window.onclick = function(event) {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            };
+        });
+
+        // Initialize the application
+        function initializeApp() {
+            // Set minimum date for webinar creation to today
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('webinar-date');
+            if (dateInput) {
+                dateInput.min = today;
+            }
+        }
+
+        // Run initialization when page loads
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+</body>
+</html>
